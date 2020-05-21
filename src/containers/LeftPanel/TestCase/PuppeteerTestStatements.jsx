@@ -1,14 +1,18 @@
 import React from 'react';
+import Form from '../Puppeteer/Form';
 
 const PuppeteerTestStatements = function puppeteerTestStatements({ puppeteerStatements, dispatchToPuppeteerTestCase }) { 
     return puppeteerStatements.map((statement, i) => {
         switch (statement.type) {
-          case 'form':
-            return (
-              <h1>FORM TESTING</h1>
-            );
+          case 'puppeteerForm':
+            return <Form 
+              key={statement.id}
+              form={statement}
+              index={i}
+              dispatchToPuppeteerTestCase={dispatchToPuppeteerTestCase}
+            />
         default:
-            return <></>;
+          return <></>;
         }
      });
 

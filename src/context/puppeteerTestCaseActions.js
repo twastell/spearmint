@@ -3,6 +3,11 @@ export const actionTypes = {
   CREATE_NEW_PUPPETEER_TEST: 'CREATE_NEW_PUPPETEER_TEST',
   ADD_PUPPETEERFORM: 'ADD_PUPPETEERFORM',
   DELETE_PUPPETEERFORM: 'DELETE_PUPPETEERFORM',
+  UPDATE_PUPPETEERFORM: 'UPDATE_PUPPETEERFORM',
+  ADD_FORM_FIELD: 'ADD_FORM_FIELD',
+  DELETE_FORM_FIELD: 'DELETE_FORM_FIELD',
+  UPDATE_FORM_FIELD: 'UPDATE_FORM_FIELD',
+
 };
 
 export const togglePuppeteer = () => ({
@@ -14,11 +19,41 @@ export const createNewPuppeteerTest = () => ({
 });
 
 export const addPuppeteerForm = () => ({
-  type: actionTypes.CREATE_NEW_TEST,
+  type: actionTypes.ADD_PUPPETEERFORM,
 });
 
 export const deletePuppeteerForm = id => ({
-  type: actionTypes.DELETE_PUPPETEERFOR,
+  type: actionTypes.DELETE_PUPPETEERFORM,
   id,
 });
+
+export const updatePuppeteerForm = ({
+  id,
+  fieldSelector,
+  buttonSelector,
+}) => ({
+  type: actionTypes.UPDATE_PUPPETEERFORM,
+  id,
+  fieldSelector,
+  buttonSelector,
+});
+
+export const addFormField = id => ({
+  type: actionTypes.ADD_FORM_FIELD,
+  id,
+});
+
+export const deleteFormField = id => ({
+  type: actionTypes.DELETE_FORM_FIELD,
+  id,
+})
+
+export const updateFormField = (id, field, value, optionID) => ({
+  type: actionTypes.UPDATE_FORM_FIELD,
+  id,
+  field,
+  value,
+  optionID,
+})
+
 

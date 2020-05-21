@@ -38,6 +38,7 @@ const PuppeteerTestMenu = ({ dispatchToPuppeteerTestCase }) => {
         </div>
       </div>
     </div>
+
   );
 };
 

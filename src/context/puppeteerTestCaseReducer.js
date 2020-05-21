@@ -14,6 +14,22 @@ let statementId = 0;
 const createPuppeteerForm = () => ({
   id: statementId++,
   type: 'puppeteerForm',
+  typesFieldSelector: '',
+  typesInput: '',
+  typesButtonSelector: '',
+  formFields: [ {
+    formKey: '',
+    formValue: '',   
+  }],
+  hasFormField: false,
+});
+
+
+const createFormField = () => ({
+// field selector ID
+// input
+  formKey: '',
+  formValue: '',   
 });
 
 export const puppeteerTestCaseReducer = (state, action) => {
@@ -46,6 +62,52 @@ export const puppeteerTestCaseReducer = (state, action) => {
         puppeteerStatements: [],
         hasPuppeteer: 0,
       };
+    
+    case actionTypes.ADD_FORM_FIELD:
+      puppeteerStatements = puppeteerStatements.map(statement => {
+        if(statement.id === action.id) {
+          statement.formFields.push(createFormField())
+          statement.hasFormField = true;
+        }
+        return statement
+      });
+      return {
+        ...state,
+        puppeteerStatements
+      }
+
+      case actionTypes.DELETE_FORM_FIELD:
+        puppeteerStatements = puppeteerStatements.map(statement => {
+          if (statement.id === action.id) {
+            statement.formFields = statement.formFields.filter(option => option.id !== action.optionId);
+          }
+  
+          if(statement.formFields.length === 0) statement.hasFormField = false
+          return statement;
+        });
+        return {
+          ...state,
+          puppeteerStatements,
+        };
+
+
+        case actionTypes.UPDATE_FORM_FIELD:
+          puppeteerStatements = puppeteerStatements.map(statement => {
+            if (statement.id === action.id) {
+              statement.formFields.map(option => {
+                if (option.id === action.optionId) {
+                  option[action.field] = action.value
+                }
+                return option
+              })
+            }
+            return statement
+          })
+          return {
+            ...state,
+            puppeteerStatements
+          }
+
     default:
       return state;
   }
