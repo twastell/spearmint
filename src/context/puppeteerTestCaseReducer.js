@@ -14,20 +14,27 @@ let statementId = 0;
 const createPuppeteerForm = () => ({
   id: statementId++,
   type: 'puppeteerForm',
-  typesFieldSelector: '',
-  typesInput: '',
-  typesButtonSelector: '',
+  // typesFieldSelector: '',
+  fieldSelector: '',
+  // typesInput: '',
+  input: '',
+  // typesButtonSelector: '',
+  buttonSelector: '',
+  testSubject: '',
+  matcher: '',
+  expectedValue: '',
   formFields: [ {
+    id: 0,
     formKey: '',
     formValue: '',   
   }],
-  hasFormField: false,
+  hasFormField: true,
+  formFieldID: 1,
 });
 
 
-const createFormField = () => ({
-// field selector ID
-// input
+const createFormField = formFieldID => ({
+  id: formFieldID++,
   formKey: '',
   formValue: '',   
 });
@@ -56,6 +63,17 @@ export const puppeteerTestCaseReducer = (state, action) => {
         puppeteerStatements,
       };
 
+    case actionTypes.UPDATE_PUPPETEERFORM:
+      puppeteerStatements = puppeteerStatements.map(statement => {
+        if(statement.id === action.id) {
+          statement[action.field] = action.value
+        }
+      })
+      return {
+        ...state,
+        puppeteerStatements
+      }
+
     case actionTypes.CREATE_NEW_PUPPETEER_TEST:
       return {
         puppeteerTestStatement: '',
@@ -66,10 +84,11 @@ export const puppeteerTestCaseReducer = (state, action) => {
     case actionTypes.ADD_FORM_FIELD:
       puppeteerStatements = puppeteerStatements.map(statement => {
         if(statement.id === action.id) {
-          statement.formFields.push(createFormField())
+          statement.formFields.push(createFormField(statement.formFieldID))
           statement.hasFormField = true;
         }
-        return statement
+        statement.formFieldID++;
+        return statement;
       });
       return {
         ...state,
@@ -78,8 +97,12 @@ export const puppeteerTestCaseReducer = (state, action) => {
 
       case actionTypes.DELETE_FORM_FIELD:
         puppeteerStatements = puppeteerStatements.map(statement => {
+          console.log('statement ID = ', statement.id)
+          console.log('action ID = ', action.id)
           if (statement.id === action.id) {
+            console.log("inside if statement.....")
             statement.formFields = statement.formFields.filter(option => option.id !== action.optionId);
+            console.log(statement.formFields)
           }
   
           if(statement.formFields.length === 0) statement.hasFormField = false

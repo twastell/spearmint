@@ -29,13 +29,17 @@ export const deletePuppeteerForm = id => ({
 
 export const updatePuppeteerForm = ({
   id,
-  fieldSelector,
-  buttonSelector,
+  field,
+  value
+  // fieldSelector,
+  // buttonSelector,
 }) => ({
   type: actionTypes.UPDATE_PUPPETEERFORM,
   id,
-  fieldSelector,
-  buttonSelector,
+  field,
+  value,
+  // fieldSelector,
+  // buttonSelector,
 });
 
 export const addFormField = id => ({
@@ -43,9 +47,10 @@ export const addFormField = id => ({
   id,
 });
 
-export const deleteFormField = id => ({
+export const deleteFormField = (id, optionId) => ({
   type: actionTypes.DELETE_FORM_FIELD,
   id,
+  optionId,
 })
 
 export const updateFormField = (id, field, value, optionID) => ({
