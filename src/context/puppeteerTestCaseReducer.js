@@ -64,10 +64,14 @@ export const puppeteerTestCaseReducer = (state, action) => {
       };
 
     case actionTypes.UPDATE_PUPPETEERFORM:
+      console.log("inside update puppeteer form")
       puppeteerStatements = puppeteerStatements.map(statement => {
+        console.log("statement = ", statement)
+        console.log("action = ", action)
         if(statement.id === action.id) {
           statement[action.field] = action.value
-        }
+        } 
+        return statement; 
       })
       return {
         ...state,
@@ -115,12 +119,19 @@ export const puppeteerTestCaseReducer = (state, action) => {
 
 
         case actionTypes.UPDATE_FORM_FIELD:
+          console.log("inside update form field part of reducer")
           puppeteerStatements = puppeteerStatements.map(statement => {
+            console.log("statement ID = ", statement.id)
+            console.log("action ID = ", action.id)
+            
             if (statement.id === action.id) {
               statement.formFields.map(option => {
+                console.log("option before = ", option)
+                console.log("action = ", action)
                 if (option.id === action.optionId) {
                   option[action.field] = action.value
                 }
+                console.log("option after = ", option)
                 return option
               })
             }
